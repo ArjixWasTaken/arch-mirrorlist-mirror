@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arch Linux Mirror Status</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .json-link {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        code {
+            background-color: #f9f9f9;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Arch Linux Mirror Status</h1>
+    
+    <p>This repository provides a regularly updated JSON file containing the status of Arch Linux mirrors.</p>
+    
+    <div class="json-link">
+        <h2>Mirror Status JSON</h2>
+        <p><strong>Direct Link:</strong> <a href="mirrors.json">mirrors.json</a></p>
+        <p><strong>Raw URL:</strong> <code>https://arjixwastaken.github.io/arch-mirrorlist-mirror/mirrors.json</code></p>
+    </div>
+    
+    <h2>Usage</h2>
+    <p>You can fetch the mirror status data using:</p>
+    <pre><code>curl https://arjixwastaken.github.io/arch-mirrorlist-mirror/mirrors.json</code></pre>
+    
+    <h2>Data Source</h2>
+    <p>The data is automatically fetched from <a href="https://archlinux.org/mirrors/status/json/">https://archlinux.org/mirrors/status/json/</a> and updated daily via GitHub Actions.</p>
+    
+    <h2>Last Updated</h2>
+    <p id="lastUpdated">Loading...</p>
+    
+    <script>
+        // Fetch and display last modified date of mirrors.json
+        fetch('mirrors.json', { method: 'HEAD' })
+            .then(response => {
+                const lastModified = response.headers.get('last-modified');
+                if (lastModified) {
+                    document.getElementById('lastUpdated').textContent = new Date(lastModified).toLocaleString();
+                } else {
+                    document.getElementById('lastUpdated').textContent = 'Unable to determine last update time';
+                }
+            })
+            .catch(error => {
+                document.getElementById('lastUpdated').textContent = 'Unable to determine last update time';
+            });
+    </script>
+</body>
+</html>
