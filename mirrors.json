@@ -1,1 +1,24 @@
-{"version": 4, "cutoff": 1800, "last_check": "2024-01-01T00:00:00Z", "urls": []}
+{
+  "version": 4,
+  "cutoff": 1800,
+  "last_check": "2024-08-21T23:14:00Z",
+  "urls": [
+    {
+      "url": "https://example.mirror/archlinux/",
+      "protocol": "https",
+      "last_sync": "2024-08-21T23:00:00Z",
+      "completion_pct": 100.0,
+      "delay": 0,
+      "duration_avg": 0.5,
+      "duration_stddev": 0.1,
+      "score": 1.0,
+      "active": true,
+      "country": "Example",
+      "country_code": "EX",
+      "isos": true,
+      "ipv4": true,
+      "ipv6": false,
+      "details": "Example mirror for testing"
+    }
+  ]
+}
