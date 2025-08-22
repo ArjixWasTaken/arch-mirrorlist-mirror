@@ -4,7 +4,7 @@ This repository automatically mirrors the Arch Linux mirror status JSON data and
 
 ## 🔄 Automated Updates
 
-The mirror status data is automatically fetched from [https://archlinux.org/mirrors/status/json/](https://archlinux.org/mirrors/status/json/) daily using a cron job and saved to `mirrors.json`.
+The mirror status data is automatically fetched from [https://archlinux.org/mirrors/status/json/](https://archlinux.org/mirrors/status/json/) daily using a systemd timer and saved to `mirrors.json`.
 
 ## 🌐 Access the Data
 
@@ -20,7 +20,7 @@ curl https://arjixwastaken.github.io/arch-mirrorlist-mirror/mirrors.json
 
 ## ⚙️ How it Works
 
-1. **Cron job** runs the update script daily
+1. **Systemd timer** runs the update script daily
 2. Fetches the latest mirror status from the official Arch Linux API
 3. Saves the data to `mirrors.json`
 4. Commits and pushes the updated file
@@ -30,15 +30,33 @@ curl https://arjixwastaken.github.io/arch-mirrorlist-mirror/mirrors.json
 
 To set up automatic updates on your own system:
 
-1. Clone this repository to your local machine
-2. Make the update script executable: `chmod +x update-mirrors.sh`
-3. Add a cron job to run the script daily. For example, to run at 00:00 UTC daily:
+1. Clone this repository to your home directory:
    ```bash
-   crontab -e
-   # Add this line:
-   0 0 * * * /path/to/your/repo/update-mirrors.sh
+   git clone https://github.com/ArjixWasTaken/arch-mirrorlist-mirror.git ~/arch-mirrorlist-mirror
+   cd ~/arch-mirrorlist-mirror
+   chmod +x update-mirrors.sh
    ```
-4. Ensure your system has `curl` installed and internet access
-5. Make sure your git repository is configured with proper authentication for pushing changes
 
-The script will automatically fetch the latest mirror data, validate it, and commit/push changes to keep the repository up to date.
+2. Install the systemd timer:
+   ```bash
+   # Create user systemd directory
+   mkdir -p ~/.config/systemd/user
+   
+   # Copy systemd files
+   cp arch-mirror-update.service ~/.config/systemd/user/
+   cp arch-mirror-update.timer ~/.config/systemd/user/
+   
+   # Enable and start the timer
+   systemctl --user daemon-reload
+   systemctl --user enable --now arch-mirror-update.timer
+   
+   # (Optional) Enable lingering to run when not logged in
+   sudo loginctl enable-linger $USER
+   ```
+
+3. Ensure your system has `curl` and `git` installed
+4. Make sure your git repository is configured with proper authentication for pushing changes
+
+For detailed setup instructions and troubleshooting, see [SYSTEMD_SETUP.md](SYSTEMD_SETUP.md).
+
+The systemd timer will automatically fetch the latest mirror data, validate it, and commit/push changes to keep the repository up to date with better reliability and logging than traditional cron jobs.
