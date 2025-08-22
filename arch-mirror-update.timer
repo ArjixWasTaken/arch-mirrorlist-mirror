@@ -1,0 +1,11 @@
+[Unit]
+Description=Run Arch Linux Mirror Status Update daily
+Requires=arch-mirror-update.service
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target

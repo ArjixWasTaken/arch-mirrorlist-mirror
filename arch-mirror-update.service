@@ -1,0 +1,14 @@
+[Unit]
+Description=Arch Linux Mirror Status Update
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/arch-mirrorlist-mirror
+ExecStart=%h/arch-mirrorlist-mirror/update-mirrors.sh
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target
