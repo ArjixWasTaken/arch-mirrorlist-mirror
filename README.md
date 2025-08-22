@@ -39,12 +39,9 @@ To set up automatic updates on your own system:
 
 2. Install the systemd timer:
    ```bash
-   # Create user systemd directory
-   mkdir -p ~/.config/systemd/user
-   
-   # Copy systemd files
-   cp arch-mirror-update.service ~/.config/systemd/user/
-   cp arch-mirror-update.timer ~/.config/systemd/user/
+   # Link systemd files to user systemd
+   systemctl --user link ./arch-mirror-update.service
+   systemctl --user link ./arch-mirror-update.timer
    
    # Enable and start the timer
    systemctl --user daemon-reload

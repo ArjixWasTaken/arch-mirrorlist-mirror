@@ -23,17 +23,14 @@ cd ~/arch-mirrorlist-mirror
 chmod +x update-mirrors.sh
 ```
 
-### 2. Install Systemd Files
+### 2. Link Systemd Files
 
-Copy the systemd files to the user systemd directory:
+Link the systemd files directly from the repository:
 
 ```bash
-# Create the user systemd directory if it doesn't exist
-mkdir -p ~/.config/systemd/user
-
-# Copy the service and timer files
-cp arch-mirror-update.service ~/.config/systemd/user/
-cp arch-mirror-update.timer ~/.config/systemd/user/
+# Link the service and timer files (must be in the repository directory)
+systemctl --user link ./arch-mirror-update.service
+systemctl --user link ./arch-mirror-update.timer
 ```
 
 ### 3. Enable and Start the Timer
